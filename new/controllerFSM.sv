@@ -1,4 +1,4 @@
-module controllerFSM(input logic clk, buttonIn, time,output logic countersig );
+module controllerFSM(input logic clk, buttonIn, timer ,output logic countersig );
 	logic state, nextState;
 	initial begin state = 0; end
 	always_ff@(posedge clk)
