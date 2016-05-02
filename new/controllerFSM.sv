@@ -5,7 +5,9 @@ module controllerFSM(input logic clk, buttonIn, timer ,output logic countersig )
 		state<=nextState;
 	always_comb
 		case(state)
-			0:begin if(!buttonIn | !time) nextState<=0; else nextState<=1; end
+			0:begin if(!buttonIn || timer)
+			         nextState<=0; 
+			       else nextState<=1; end
 			1:nextState<=0;
 		endcase
 	always_comb

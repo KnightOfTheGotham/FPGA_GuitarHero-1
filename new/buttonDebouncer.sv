@@ -3,10 +3,9 @@ module PushButton_Debouncer(
     input logic PB,  // "PB" is the glitchy, asynchronous to clk, active low push-button signal
 
     // from which we make three outputs, all synchronous to the clock
-    output logic PB_state,  // 1 as long as the push-button is active (down)
+    output logic PB_state  // 1 as long as the push-button is active (down)
     
 );
-
 // First use two flip-flops to synchronize the PB signal the "clk" clock domain
 reg PB_sync_0;  always @(posedge clk) PB_sync_0 <= ~PB;  // invert PB to make PB_sync_0 active high
 reg PB_sync_1;  always @(posedge clk) PB_sync_1 <= PB_sync_0;

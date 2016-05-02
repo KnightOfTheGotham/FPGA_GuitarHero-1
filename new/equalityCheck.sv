@@ -1,4 +1,4 @@
-module equalityCheck(input logic [3:0] buttons, song, output logic out);
+module equalityCheck(input logic [4:0] buttons, song, output logic out);
 
 	logic [4:0]temp;
 	xor(temp[4],buttons[4],song[4]);
