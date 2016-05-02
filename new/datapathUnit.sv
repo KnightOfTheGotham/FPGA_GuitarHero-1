@@ -20,5 +20,5 @@ module datapathUnit(input logic clk, [4:0]buttons, [6:0]songDataPos,
 	assign digit3 = (pointOut>7'd99);
 	display_controller dc(clk ,1,4'b0111,4'b0000,digit3,digit2,digit1, AN, seg, dp);
 	soundSystem ss(clk,songD,songplay );
-	assign button_in = button_debounced?1:0;
+	assign button_in = (button_debounced>4'b0)?1:0;
 endmodule
