@@ -1,4 +1,4 @@
-module pointKeeper(input logic comp, output reg [6:0] pointOut, reg overflow);
+module pointKeeper(input logic comp, output logic [6:0] pointOut, logic overflow);
 	reg[6:0] points;
 	initial begin points=7'b0;end
 	always_comb
