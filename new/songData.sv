@@ -1,5 +1,5 @@
-module songData(input logic clk, [7:0]go, output reg [4:0] data);
-	reg [4:0] notes[0:256];
+module songData(input logic clk, [6:0]go, output reg [4:0] data);
+	reg [4:0] notes[0:127];
 	initial begin
 		notes[0]=4'b00001;
 		notes[1]=5'b00001;
