@@ -16,15 +16,15 @@ input logic clk;
 input logic [4:0]sw;
 output reg speaker;
 
-reg [19:0] counter;
+reg [16:0] counter;
 always @(posedge clk) counter<=counter+1;
 always @(posedge clk)
 case(sw)
-  5'b00001: speaker = counter[15]; // A 
-  5'b00010: speaker = counter[14]; // B 
-  5'b00100: speaker = counter[13]; // C 
-  5'b01000: speaker = counter[12]; // D 
-  5'b10000: speaker = counter[11]; // E 
+  5'b00001: speaker = counter[12]; // A 
+  5'b00010: speaker = counter[13]; // B 
+  5'b00100: speaker = counter[14]; // C 
+  5'b01000: speaker = counter[15]; // D 
+  5'b10000: speaker = counter[16]; // E 
   default: speaker = 0; // should never happen
 endcase
 //assign speaker = counter[15];
