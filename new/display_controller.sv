@@ -28,7 +28,7 @@
 //  
 //////////////////////////////////////////////////////// 
 
-module display_controller (
+module seg7 (
 		input logic clk, clear,
 		input logic [3:0] enables, 
 		input logic [3:0] digit3, digit2, digit1, digit0,
@@ -49,7 +49,7 @@ module display_controller (
 	assign AN = ~(enables & cur_dig_AN);// AN signals are active low,
                                 	// and must be enabled to display digit
 
-      	assign C = ~segments;     	// since the C values are active low
+      	assign C = segments;     	// since the C values are active low
 
       	assign DP = 1;            	// the dot point is always off 
                                 	// (0 = on, since it is active low)
@@ -84,22 +84,22 @@ module display_controller (
 // the hex-to-7-segment decoder
 	always_comb
 		case (current_digit)
-		4'b0000: segments = 7'b111_1110;  // 0
-		4'b0001: segments = 7'b011_0000;  // 1
-		4'b0010: segments = 7'b110_1101;  // 2
-		4'b0011: segments = 7'b111_1001;  // 3
-		4'b0100: segments = 7'b011_0011;  // 4
-		4'b0101: segments = 7'b101_1011;  // 5
-		4'b0110: segments = 7'b101_1111;  // 6
-		4'b0111: segments = 7'b111_0000;  // 7
-		4'b1000: segments = 7'b111_1111;  // 8
-		4'b1001: segments = 7'b111_0011;  // 9
-		4'b1010: segments = 7'b111_0111;  // A
-		4'b1011: segments = 7'b001_1111;  // b
-		4'b1100: segments = 7'b000_1101;  // c
-		4'b1101: segments = 7'b011_1101;  // d
-		4'b1110: segments = 7'b100_1111;  // E
-		4'b1111: segments = 7'b100_0111;  // F
+		 4'b0000:begin segments=7'b1000000; end
+              4'b0001:begin segments=7'b1111001; end
+              4'b0010:begin segments=7'b0100100; end
+              4'b0011:begin segments=7'b0110000; end
+              4'b0100:begin segments=7'b0011001; end
+              4'b0101:begin segments=7'b0010010; end
+              4'b0110:begin segments=7'b0000010; end
+              4'b0111:begin segments=7'b1111000; end
+              4'b1000:begin segments=7'b0000000; end
+              4'b1001:begin segments=7'b0011000; end
+              4'b1010:begin segments=7'b0001000; end
+              4'b1011:begin segments=7'b0000000; end
+              4'b1100:begin segments=7'b1000110; end
+              4'b1101:begin segments=7'b1000000; end
+              4'b1110:begin segments=7'b0000110; end
+              4'b1111:begin segments=7'b0001110; end
 		default: segments = 7'bxxx_xxxx;
 		endcase		
 
