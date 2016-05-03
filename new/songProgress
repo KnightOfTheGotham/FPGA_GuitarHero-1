@@ -1,0 +1,22 @@
+module songProgress(input logic counter, output logic prog[9:0]);  
+  if(counter<=9)
+    prog=10b'0000000001;
+    else if(counter<=18)
+      prog=10b'0000000011;
+    else if(counter<=27)
+      prog=10b'0000000111;
+    else if(counter<=36)
+      prog=10b'0000001111;
+    else if(counter<=45)
+      prog=10b'0000011111;
+    else if(counter<=54)
+      prog=10b'0000111111;
+    else if(counter<=63)
+      prog=10b'0001111111;
+    else if(counter<=72)
+      prog=10b'0011111111;
+    else if(counter<=81)
+      prog=10b'0111111111;
+    else if(counter<=93)
+      prog=10b'1111111111;
+   
