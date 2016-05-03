@@ -1,24 +1,24 @@
-module datapathUnit(input logic clk, [4:0]buttons, [6:0]songDataPos,
-				    output logic songplay,button_in,[4:0]songD,[6:0] seg, [3:0] AN);
-	//logic [4:0] songD;
-	logic is_equal;
-	logic[6:0] pointOut;
-	logic [4:0] button_debounced;
-	logic[3:0]digit1, digit2, digit3;
-	logic dp;
-	initial begin dp = 1; end
-	songData sd(clk, songDataPos, songD);
-	PushButton_Debouncer db1(clk,buttons[0],button_debounced[0]);
-	PushButton_Debouncer db2(clk,buttons[1],button_debounced[1]);
-	PushButton_Debouncer db3(clk,buttons[2],button_debounced[2]);
-	PushButton_Debouncer db4(clk,buttons[3],button_debounced[3]);
-	PushButton_Debouncer db5(clk,buttons[4],button_debounced[4]);
-	equalityCheck ec(button_debounced, songD, is_equal );
-	pointKeeper pk(is_equal,pointOut);
-	assign digit2 = pointOut%7'd100;
-	assign digit1 = pointOut%7'd10;
-	assign digit3 = (pointOut>7'd99);
-	display_controller dc(clk ,1,4'b0111,4'b0000,digit3,digit2,digit1, AN, seg, dp);
-	soundSystem ss(clk,songD,songplay );
-	assign button_in = (button_debounced>4'b0)?1:0;
+
+module datapath(
+    input logic clk, rst,[4:0]button,
+    output logic [4:0]led, logic button_eq, logic [6:0]seg, logic [3:0]an, logic dp,logic [9:0]progress, logic songplay
+    );
+    reg [4:0]output_button;
+    logic [6:0]go;
+    logic sig;
+    
+    reg [7:0]pointOut;
+    PushButton_Debouncer deb1(clk,button[0],output_button[0]);
+    PushButton_Debouncer deb2(clk,button[1],output_button[1]);
+    PushButton_Debouncer deb3(clk,button[2],output_button[2]);
+    PushButton_Debouncer deb4(clk,button[3],output_button[3]);
+    PushButton_Debouncer deb5(clk,button[4],output_button[4]);
+    sec1counter sc(clk, rst,sig);
+    counter c(sig, go);
+    songData sd(clk, go, led);
+    equalityCheck equal(output_button, led,button_eq );
+    pointKeeper pk(clk, button_eq, pointOut);
+    songProgress(clk, pointOut, progress);
+    soundSystem ss(clk, led, songPlay);
+    seg7 display_ctrl(clk, rst,4'b1111, 4'b0000, 4'b0000, pointOut[7:4], pointOut[3:0],an, seg, dp);
 endmodule
