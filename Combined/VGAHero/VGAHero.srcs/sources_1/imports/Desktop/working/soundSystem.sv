@@ -1,55 +1,31 @@
-module soundSystem(input logic clk,[4:0]song,output logic songplay);
-	logic song1,song2, song3, song4, song5;
-	A a(clk, song1);
-	B b(clk, song2);
-	C c(clk, song3);
-	D d(clk, song4);
-	E e(clk, song5);
-	always_ff@(posedge clk)
-		case (song)
-			default: begin songplay = 0; end
-			5'b00001:begin songplay = song1; end
-			5'b00010:begin songplay = song2; end
-			5'b00100:begin songplay = song3; end
-			5'b01000:begin songplay = song4; end
-			5'b10000:begin songplay = song5; end
-		endcase
-endmodule
+//module soundSystem(input logic clk,[4:0]sw,output reg songplay);
+//assign speaker = clkdivider;
+//reg [8:0] clkdivider;
+//always @(posedge clk)
+//case(sw)
+//  5'b00001: clkdivider = 512-1; // A 
+//  5'b00010: clkdivider = 456-1; // B 
+//  5'b00100: clkdivider = 431-1; // C 
+//  5'b01000: clkdivider = 384-1; // D 
+//  5'b10000: clkdivider = 342-1; // E 
+//  default: clkdivider = 0; // should never happen
+//endcase
+//endmodule
+module music(clk,sw, speaker);
+input logic clk;
+input logic [4:0]sw;
+output reg speaker;
 
-module A(input logic clk, output logic song);//440HZ
-reg [14:0] counter;
-always @(posedge clk) if(counter==28408) counter<=0; else counter <= counter+1;
-
-reg speaker;
-always @(posedge clk) if(counter==28408) speaker <= ~speaker;
-endmodule
-
-
-module B(input logic clk, output logic song);//400Hz
-reg [20:0] counter;
-always @(posedge clk) if(counter==29999999) counter <= 0; else counter <= counter+1;
-
-assign speaker = counter[20];
-endmodule
-
-module C(input logic clk, output logic song);//350Hz
-reg [30:0] counter;
-always @(posedge clk) if(counter==39999999) counter <= 0; else counter <= counter+1;
-
-assign speaker = counter[30];
-endmodule
-
-
-module D(input logic clk, output logic song);//300Hz
-reg [40:0] counter;
-always @(posedge clk) if(counter==49999999) counter <= 0; else counter <= counter+1;
-
-assign speaker = counter[40];
-endmodule
-
-module E(input logic clk, output logic song);//250Hz
-reg [50:0] counter;
-always @(posedge clk) if(counter==59999999) counter <= 0; else counter <= counter+1;
-
-assign speaker = counter[50];
+reg [19:0] counter;
+always @(posedge clk) counter<=counter+1;
+always @(posedge clk)
+case(sw)
+  5'b00001: speaker = counter[15]; // A 
+  5'b00010: speaker = counter[14]; // B 
+  5'b00100: speaker = counter[13]; // C 
+  5'b01000: speaker = counter[12]; // D 
+  5'b10000: speaker = counter[11]; // E 
+  default: speaker = 0; // should never happen
+endcase
+//assign speaker = counter[15];
 endmodule
