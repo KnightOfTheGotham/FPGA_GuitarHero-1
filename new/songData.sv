@@ -1,12 +1,6 @@
-module songData(clk,cnt,data);
+module songData(input logic clk, input reg[6:0]go, output reg [4:0] data);
 	
-	input clk
-	input [6:0] cnt;
-	output [4:0] data
-	
-	reg [4:0] data
-	reg [4:0] notes [0:93];
-	
+	reg [4:0] notes[0:93];
 	initial begin
 		notes[0]=5'b00001;
 		notes[1]=5'b00001;
@@ -108,6 +102,6 @@ module songData(clk,cnt,data);
 	end
 	always_ff@(posedge clk)
 	begin
-		data <= notes[cnt];
+		data = notes[go];
 	end
 endmodule
